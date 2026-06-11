@@ -1,0 +1,19 @@
+{
+  "name": "mybackend",
+  "version": "1.0.0",
+  "description": "A basic backend application to deploy",
+  "keywords": [
+    "node",
+    "backend"
+  ],
+  "license": "ISC",
+  "author": "Paritosh",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

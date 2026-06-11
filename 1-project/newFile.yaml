@@ -1,0 +1,80 @@
+chai_type: masala_chai # inline comment
+new_ver: 12
+thisnewvar: chiwawa
+
+# the general practice is to write in snake case with underscores
+
+# the indentation is only two spaces (not a tab)
+chai_recipe: 
+  base: black_tea
+  milk: whole_milk
+
+# -----------------
+# DATA TYPES
+# -----------------
+
+# string
+# we can write stirngs with double, single and no quotes (for single line string)
+chai_name: masala_chai
+description: "chai with cardemom, ginger"
+tagline: 'the best chai in town'
+
+# for multiline string, we first give a pipe `|` or greatere then `>` sign
+# and then write the rest of the string with indentation (two spaces)
+brewing_instructions: |
+  boil wated
+  add tea leaves
+  add milk
+
+brewing_instructions2: >
+  boil wated
+  add tea leaves
+  add milk
+
+# Numbers
+cups_per_day_integer: 3
+cups_per_day_decimal: 3.5
+cups_per_day_scientific_notation: 3.5e+2
+cups_per_day_scientific_hexadecimal: 0xFF22Ff
+
+# Boolean: true, false, yes, no, on and off are supported to denote boolean values
+is_hot: true
+add_sugar: yes
+add_salt: no
+instant: off
+instant2: on
+
+# null values: `null` and tilde sign `~` are supported to denote null
+sweetner: null
+alternative_milk: ~
+
+# timestamps: different formats of date and time are supported
+# yy-mm-dd
+morning_brew: 2025-01-15
+# yy-mm-dd [space] hh-mm-ss
+local_time: 2025-01-15 08:30:01
+
+# lists
+# this is the same as: spices: ['ginger', 'cloves', 'black_pepper']
+spices:
+  - ginger
+  - cloves
+  - black_pepper
+  - true
+  - no
+  - 200
+
+# nested list
+chai_categories:
+  - name: Traditional_chai
+    varieties:
+      - masala_chai
+      - ginger_chai
+      - cardemom_chai
+  - name: Modern_chai
+    varieties:
+      - vanilla_chai
+      - chocolate_chai
+
+# old school format to define list & items in yaml
+spices2: [cardemom, ginger, cloves]
