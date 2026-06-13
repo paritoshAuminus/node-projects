@@ -1,0 +1,21 @@
+{
+  "name": "my-backend",
+  "version": "1.0.0",
+  "description": "This is a professionally created and industry standard web application.",
+  "keywords": [
+    "Javascript",
+    "backend",
+    "express",
+    "js"
+  ],
+  "license": "ISC",
+  "author": "Paritosh",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon /src/index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
