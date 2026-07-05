@@ -1,12 +1,66 @@
 import express from "express";
+import myFunc from "./control.js";
+import router from "./routes.js";
 
 const app = express()
 const port = 3000
 
-app.get('/', (req, res) => {
-    res.send("Just got a GET request.")
+// Loading dedicated routes
+app.use('/site', router)
+
+// NORMAL GET
+// app.get('/', (req, res) => {
+//     res.send("Just got a GET request.")
+// })
+
+// GET WITH A CONTROLLER OUTSIDE
+app.get('/', myFunc)
+
+// GET WITH TWO CALLBACKS USING `next()` -> Getting error!! 
+// app.get('/two_callbacks/:number', (req, res, next) => {
+//     if (req.params.number != 1) {
+//         res.send(`Handing control to next handler || Number: ${req.params.number}`)
+//         next("route")
+//     }
+//     res.send("This is the first callback!")
+// })
+
+// app.get('/two_callbacks/:number', (req, res) => {
+//     res.send(`I am the second callback! || Number: ${req.params.number}`)
+// })
+
+// TWO HANDLERS - ONE ROUTE -> FAILED
+app.get('/two_handlers', (req, res, next) => {
+    console.log("The control is transferred to the next handler.")
+    next(),
+
+    (req, res) => {
+        res.send("This is the second handler")
+    }
 })
 
+// PRINT REQUEST AND RESPONSE OBJECT 
+app.get('/printReqObj', (req, res) => {
+    res.send("Request object printed!!")
+    console.log(req)
+})
+
+app.get('/printResObj', (req, res) => {
+    res.send("Response object printed!!")
+    console.log(res)
+})
+
+// ROUTE PATH WILDCARD
+app.get('/wildcard/*superman', (req, res) => {
+    console.dir(req.params.superman)
+})
+
+// ROUTE PARAMS
+app.get('/params/:ironman', (req, res) => {
+    res.send(req.params.ironman)
+})
+
+// DIFFERENT REQUEST METHODS
 app.post('/post', (req, res) => {
     res.send("Just got a POST request.")
 })
@@ -19,6 +73,39 @@ app.delete('/delete', (req, res) => {
     res.send("Just got a DELETE request.")
 })
 
+// ARRAY OF HANDLERS FOR ONE ROUTE
+app.get('/handler_array', [cb0, cb1, cb2], (req, res) => {
+    console.log("This is the final anonymous handler")
+    res.send("This is the final handler!!")
+})
+
+function cb0 (req, res, next) {console.log("This is CB0"); next()}
+function cb1 (req, res, next) {console.log("This is CB1"); next()}
+function cb2 (req, res, next) {console.log("This is CB2"); next()}
+
+// ARRAY OF HANDLER -> SECOND EXAMPLE
+app.get('/handler_array_2', [
+    cb0, cb1, 
+    (req, res, next) => {
+        console.log("This is the third handler")
+        next()
+    },
+    cb2,
+    (req, res) => {
+        console.log("This is the final handler")
+        res.send("Final Handler for handler_array_2")
+    }
+])
+
+// JSON RESPONSE
+app.get('/json_response', (req, res) => {
+    res.json({
+        name: "Some name",
+        age: 1626
+    })
+})
+
+// WRITING MIDDLEWARE
 app.use('/static/', express.static('public'))
 
 app.use((req, res, next) => {
@@ -28,3 +115,5 @@ app.use((req, res, next) => {
 app.listen(port, () => {
     console.log(`Server is running http://localhost:${port}/`)
 })
+
+export {app}
