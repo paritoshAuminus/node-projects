@@ -1,5 +1,8 @@
 import express from "express"
 import mongoose from "mongoose"
+import dotenv from "dotenv"
+
+dotenv.config()
 
 // const dbResponse = main()
 
@@ -16,12 +19,12 @@ app.listen(port, () => {
 async function main() {
 
     try {
-        const dbResponse = await mongoose.connect(`${process.ENV.MONGO_URI}`)
+        const dbResponse = await mongoose.connect(`${process.env.MONGO_URI}`)
         console.log("MongoDB connected!!")
         return dbResponse
-        
+
     } catch (error) {
-        console.error(`4. DB connection error :: ${error}`)
+        console.error(`DB connection error :: ${error}`)
         return `Database error :: ${error}`
     }
 }
@@ -34,7 +37,14 @@ app.get('/', (req, res) => {
 
 const kittySchema = new mongoose.Schema({
     name: String
-})
+},
+    {
+        statics: {
+            roar() {
+                console.log(`${this.name} says WRRAARRR!!`)
+            }
+        }
+    })
 
 kittySchema.methods.speak = function () {
     console.log(`Meow name is ${this.name}`)
@@ -59,9 +69,8 @@ const uncleJohn = new Kitty({
 })
 
 moustache.speak()
-fluffy.speak()
-mrCoco.speak()
-uncleJohn.speak()
+// fluffy.roar()
+// mrCoco.sleep()
 
 
 async function saveToDb() {
@@ -70,10 +79,16 @@ async function saveToDb() {
 
 // saveToDb()
 
-async function retrieveDb() {
-    const kittens = await Kitty.find()
-    console.log(kittens) 
+async function deleteDbInstance(object) {
+    await object.deleteOne()
 }
 
-// retrieveDb()
+// deleteDbInstance(moustache)
+
+async function retrieveDb() {
+    const kittens = await Kitty.find()
+    console.log(kittens)
+}
+
+retrieveDb()
 
