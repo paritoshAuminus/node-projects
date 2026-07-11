@@ -16,7 +16,7 @@ app.listen(port, () => {
 async function main() {
 
     try {
-        const dbResponse = await mongoose.connect("mongodb+srv://AuminusAdmin:9FidkSsGBV8Xs@cluster0.yc37ol8.mongodb.net/")
+        const dbResponse = await mongoose.connect(`${process.ENV.MONGO_URI}`)
         console.log("MongoDB connected!!")
         return dbResponse
         
