@@ -1,0 +1,19 @@
+{
+  "name": "7-notes-project",
+  "version": "1.0.0",
+  "description": "A simple CRUD notes app with no validation, authentication or authorization. ",
+  "license": "ISC",
+  "author": "paritoshAuminus",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "test": "node ./src/app.js",
+    "dev": "nodemon ./src/app.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.7.4",
+    "nodemon": "^3.1.14"
+  }
+}
