@@ -1,8 +1,14 @@
 import mongoose, {Schema} from "mongoose";
 
 const notesSchema = new Schema({
-    title: String,
-    body: String
+    title: {
+        type: String,
+        required: true
+    },
+    body: {
+        type: String,
+        required: true
+    },
 }, {timestamps: true})
 
 export const Notes = mongoose.model("Notes", notesSchema)
