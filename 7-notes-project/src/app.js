@@ -4,7 +4,7 @@ import { connectDB } from "../db/db.js"
 import router from "../routes/routes.js"
 import blackbox from "../middlewares/record.middlewares.js"
 
-const port = 3000
+export const port = 3000
 const app = express()
 
 // enabling json Parsing
