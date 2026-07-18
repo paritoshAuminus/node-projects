@@ -1,5 +1,5 @@
 const blackbox = (req, res, next) => {
-    console.log(`[${Date()}] ${req.url}`)
+    console.log(`[${Date()}] ${req.method} ${req.url}`)
     next()
 }
 
