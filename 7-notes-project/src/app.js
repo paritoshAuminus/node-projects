@@ -3,6 +3,8 @@ import mongoose from "mongoose"
 import { connectDB } from "../db/db.js"
 import router from "../routes/routes.js"
 import blackbox from "../middlewares/record.middlewares.js"
+import accessTokenGenerator from "../utils/jwt.utils.js"
+import { tokenAuthenticator } from "../middlewares/auth.middlewares.js"
 
 export const port = 3000
 const app = express()
@@ -11,7 +13,7 @@ const app = express()
 app.use(express.json())
 
 // Mongo DB connection
-connectDB()
+// connectDB()
 
 // blackbox for requests
 app.use(blackbox)

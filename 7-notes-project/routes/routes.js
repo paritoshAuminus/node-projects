@@ -19,6 +19,7 @@ router.delete('/deleteuser', async (req, res) => {
 
 // LOGIN AND REGISTER
 router.post('/register', register)
+// router.post('/login')
 
 // NOTES CRUD ROUTES
 router.get('/getNote/:id', getNote)
