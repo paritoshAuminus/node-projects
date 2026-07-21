@@ -31,12 +31,13 @@ const getNotes = async (req, res) => {
 
 const createNote = async (req, res) => {
 
+    const user = req.user
     const title = req.body.title
     const body = req.body.body
 
     if (!title || !body) {
         res.json({
-            message: "Title and body are required for to create a new note"
+            message: "Title and body are required to create a new note"
         })
 
         return new Error("createNote :: Title and Body are required to create a new note")
@@ -44,6 +45,7 @@ const createNote = async (req, res) => {
 
     try {
         const response = await Notes.create({
+            user: user,
             title: title,
             body: body
         })

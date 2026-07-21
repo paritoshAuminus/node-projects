@@ -13,7 +13,7 @@ const app = express()
 app.use(express.json())
 
 // Mongo DB connection
-// connectDB()
+connectDB()
 
 // blackbox for requests
 app.use(blackbox)
