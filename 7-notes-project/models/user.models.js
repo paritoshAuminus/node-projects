@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { hash } from "bcrypt";
 
 // USER MODEL
 const userSchema = new Schema({
@@ -17,6 +18,14 @@ const userSchema = new Schema({
         required: true,
     }
 }, {timestamps: true})
+
+// HASHING PASSWORD IN BCRYPT 
+
+// userSchema.pre("save", (doc) => {
+//     hash(doc.password, 12, (err, hash) => {
+//         {}
+//     })
+// })
 
 
 export const User = mongoose.model('User', userSchema)

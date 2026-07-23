@@ -18,14 +18,6 @@ router.delete('/deleteuser', async (req, res) => {
     res.json(response)
 })
 
-// LOGIN AND REGISTER
-router.post('/register', register)
-router.post('/login', login)
-
-// NOTES CRUD ROUTES
-router.get('/getNote/:id', getNote)
-router.get('/getNotes', getNotes)
-// router.post('/createNote', createNote)
 router.post('/createnote', tokenAuthenticator, createNote)
 router.patch('/updateNote/:id', updateNote)
 router.delete('/deleteNote', deleteNote)

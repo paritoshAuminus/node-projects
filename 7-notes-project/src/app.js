@@ -1,7 +1,8 @@
 import express from "express"
 import mongoose from "mongoose"
 import { connectDB } from "../db/db.js"
-import router from "../routes/routes.js"
+import notesRouter from "../routes/notes.routes.js"
+import authRouter from "../routes/auth.routes.js"
 import blackbox from "../middlewares/record.middlewares.js"
 import accessTokenGenerator from "../utils/jwt.utils.js"
 import { tokenAuthenticator } from "../middlewares/auth.middlewares.js"
@@ -18,7 +19,8 @@ connectDB()
 // blackbox for requests
 app.use(blackbox)
 
-app.use('/notes', router)
+app.use('/notes', notesRouter)
+app.use('/auth', authRouter)
 
 // App firing up
 app.listen(port, () => {

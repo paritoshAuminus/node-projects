@@ -6,7 +6,7 @@ import accessTokenGenerator from "../utils/jwt.utils.js"
 // --------------------------------------------
 
 
-// REGISTER
+// [POST] (Public) register user - username, email and password
 export const register = async (req, res) => {
     
     const username = req.body.username
@@ -33,7 +33,7 @@ export const register = async (req, res) => {
 }
 
 
-// LOGIN
+// [POST] (Public) login user - username & password - return access token
 export const login = async (req, res) => {
     
     const username = req.body.username

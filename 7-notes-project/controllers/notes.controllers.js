@@ -1,5 +1,13 @@
 import { Notes } from "../models/notes.models.js";
+import { User } from "../models/user.models.js";
 
+
+// ------------------------------------------
+// NOTES CONTROLLERS CONFIG
+// ------------------------------------------
+
+
+// [GET] (Public) - Get one note (pass note Id in the url)
 const getNote = async (req, res) => {
 
     const noteId = req.params.id
@@ -20,6 +28,7 @@ const getNote = async (req, res) => {
     }
 }
 
+// [GET] (Public) - Get all notes
 const getNotes = async (req, res) => {
     try {
         const response = await Notes.find()
@@ -29,33 +38,40 @@ const getNotes = async (req, res) => {
     }
 }
 
+// [POST] (Protected) - Create new note
 const createNote = async (req, res) => {
 
-    const user = req.user
+    const decodedToken = req.user
     const title = req.body.title
     const body = req.body.body
 
-    if (!title || !body) {
-        res.json({
-            message: "Title and body are required to create a new note"
+    if (!decodedToken) {
+        return res.status(403).json({
+            message: "Please login to create a note"
         })
-
-        return new Error("createNote :: Title and Body are required to create a new note")
     }
 
+    if (!title || !body) {
+        return res.status(403).json({
+            message: "Title and body are required to create a new note"
+        })
+    }
+    
     try {
+        const user = await User.findOne({_id: decodedToken.userId})
         const response = await Notes.create({
             user: user,
             title: title,
             body: body
         })
 
-        res.json(response)
+        return res.status(201).json({message: "Note created successfully!", data: {userId: user._id, title: response.title, body: response.body}})
     } catch (error) {
-        console.log(`Controllers :: createNote :: ${error}`)
+        return res.status(404).json({message: "Error creating note"})
     }
 }
 
+// [POST] (Protected) - Update your own note
 const updateNote = async (req, res) => {
     const Id = req.params.id
     const title = req.body.title
@@ -81,6 +97,7 @@ const updateNote = async (req, res) => {
     }
 }
 
+// [DELETE] (Protected) - Delete your own notes
 const deleteNote = async (req, res) => {
     const Id = req.params.id
 
