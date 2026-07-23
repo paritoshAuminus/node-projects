@@ -6,18 +6,6 @@ import { User } from "../models/user.models.js";
 
 const router = Router()
 
-// /////////////// TESTING ///////////////
-router.get('/getusers', async (req, res) => {
-    const response = await User.find({})
-    res.json(response)
-})
-
-router.delete('/deleteuser', async (req, res) => {
-    const userId = req.body.userId
-    const response = await User.deleteOne({ _id: userId })
-    res.json(response)
-})
-
 router.post('/createnote', tokenAuthenticator, createNote)
 router.patch('/updateNote/:id', updateNote)
 router.delete('/deleteNote', deleteNote)
