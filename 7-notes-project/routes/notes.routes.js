@@ -6,6 +6,8 @@ import { User } from "../models/user.models.js";
 
 const router = Router()
 
+router.get('/getnotes', getNotes)
+
 router.post('/createnote', tokenAuthenticator, createNote)
 router.patch('/updateNote/:id', updateNote)
 router.delete('/deleteNote', deleteNote)

@@ -28,7 +28,7 @@ export const register = async (req, res) => {
             password: hashPass
         })
 
-        return res.status(201).json({ userId: response.__id, username: response.username, email: response.email })
+        return res.status(201).json({ userId: response._id, username: response.username, email: response.email })
 
     } catch (error) {
         return res.status(404).json({ message: error })

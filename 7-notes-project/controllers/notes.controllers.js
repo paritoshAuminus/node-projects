@@ -31,25 +31,25 @@ const getNote = async (req, res) => {
 // [GET] (Public) - Get all notes
 const getNotes = async (req, res) => {
     try {
-        const response = await Notes.find()
+        const response = await Notes.find({})
         res.json(response)
     } catch (error) {
-        console.log(`Controllers :: getNotes :: ${error}`)
+        res.status(500).json({message: "Error fetching notes"})
     }
 }
 
 // [POST] (Protected) - Create new note
 const createNote = async (req, res) => {
 
-    const decodedToken = req.user
+    const user = req.user
     const title = req.body.title
     const body = req.body.body
 
-    if (!decodedToken) {
-        return res.status(403).json({
-            message: "Please login to create a note"
-        })
-    }
+    // if (!decodedToken) {
+    //     return res.status(403).json({
+    //         message: "Please login to create a note"
+    //     })
+    // }
 
     if (!title || !body) {
         return res.status(403).json({
@@ -58,7 +58,7 @@ const createNote = async (req, res) => {
     }
     
     try {
-        const user = await User.findOne({_id: decodedToken.userId})
+        // const user = await User.findOne({_id: decodedToken.userId})
         const response = await Notes.create({
             user: user,
             title: title,
@@ -99,21 +99,19 @@ const updateNote = async (req, res) => {
 
 // [DELETE] (Protected) - Delete your own notes
 const deleteNote = async (req, res) => {
-    const Id = req.params.id
+    const id = req.body.noteId
 
-    if (id === undefined) {
-        res.json({
-            message: "No valid ID in the request URL"
+    if (!id) {
+        res.status(400).json({
+            message: "No id in the request"
         })
-        
-        return new Error("deleteNote :: No ID in the url")
     }
 
     try {
         const response = await Notes.deleteOne({_id: Id})
-        res.json(response)
+        res.status(200).json({message: "Note deleted successfully", data: response})
     } catch (error) {
-        console.log(`Controllers :: deleteNote :: ${error}`)
+        res.status(500).json({message: "Note delettion failed", error: error})
     }
 }
 

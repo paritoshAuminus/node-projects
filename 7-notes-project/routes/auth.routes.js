@@ -10,7 +10,7 @@ router.get('/getusers', async (req, res) => {
     res.json(response)
 })
 
-router.delete('/deleteuser/:userId', async (req, res) => {
+router.delete('/deleteuser', async (req, res) => {
     const userId = req.body.userId
     const response = await User.deleteOne({ _id: userId })
     res.json(response)

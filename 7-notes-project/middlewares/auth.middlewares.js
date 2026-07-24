@@ -12,12 +12,18 @@ export const tokenAuthenticator = (req, res, next) => {
         return res.status(401).json({message: "token missing!"})
     }
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
         if (err) {
-            return res.status(403).json({message: "missing or invalid token!!"})
+            return res.status(401).json({message: "missing or invalid token!!"})
         }
 
-        req.user = decoded
+        const trueUser = await User.findOne({_id: decoded.userId})
+
+        if (!trueUser) {
+            return res.status(401).json({message: "user doesn't exist"})
+        }
+
+        req.user = trueUser
         next()
     })
 }
